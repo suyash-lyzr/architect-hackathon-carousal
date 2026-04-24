@@ -128,10 +128,9 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 300; line-height
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 500;
-  color: #ffd7c2;
+  color: #ffffff;
   font-size: 1.15em;
   margin: 0 4px;
-  text-shadow: 0 0 18px rgba(255, 180, 150, .55), 0 0 2px rgba(255, 215, 194, .9);
 }
 .announce-dot {
   width: 7px; height: 7px; border-radius: 50%;
