@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lyzr Agentathon — Live Wall</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="h-orb a"></div>
+  <div class="h-orb b"></div>
+  <div class="h-orb c"></div>
+  <div class="h-rim-top"></div>
+  <div class="h-sweep"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo-mark">L</div>
+      <div class="brand-text">
+        <div class="eyebrow">Lyzr AI · Live Wall</div>
+        <h1 class="brand-title">Agent<em>athon</em></h1>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="pill"><span class="dot"></span><span>LIVE</span></div>
+      <div class="eyebrow tag" id="hashtag">#LyzrAgentathon</div>
+      <div class="meta-sub" id="status">loading…</div>
+    </div>
+  </header>
+
+  <main class="stage">
+    <div id="track" class="track"></div>
+  </main>
+
+  <footer class="footerbar">
+    <div class="foot-left">
+      <span class="rule-inline"></span>
+      <span>Auto-refreshes every <strong id="refresh-mins">30</strong> min</span>
+      <span class="sep">·</span>
+      <span><strong id="count">0</strong> posts</span>
+    </div>
+    <div class="foot-right" id="next-refresh"></div>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
