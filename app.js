@@ -1,12 +1,8 @@
 const track = document.getElementById("track");
 const statusEl = document.getElementById("status");
-const countEl = document.getElementById("count");
 const hashtagEl = document.getElementById("hashtag");
-const refreshMinsEl = document.getElementById("refresh-mins");
-const nextRefreshEl = document.getElementById("next-refresh");
 
 let tweets = [];
-let nextRefreshAt = 0;
 let hashtag = "LyzrAgentathon";
 
 function escapeHtml(s) {
@@ -120,8 +116,6 @@ function render() {
   // Scale animation duration to number of cards for consistent slow speed
   const secondsPerCard = 12; // larger = slower
   track.style.animationDuration = `${Math.max(60, tweets.length * secondsPerCard)}s`;
-
-  countEl.textContent = tweets.length;
 }
 
 function updateStatus(fetchedAt, error) {
@@ -135,11 +129,6 @@ function updateStatus(fetchedAt, error) {
   }
   const mins = Math.floor((Date.now() - fetchedAt) / 60000);
   statusEl.textContent = mins === 0 ? "updated just now" : `updated ${mins}m ago`;
-
-  if (nextRefreshAt) {
-    const left = Math.max(0, Math.floor((nextRefreshAt - Date.now()) / 60000));
-    nextRefreshEl.textContent = `next refresh in ${left}m`;
-  }
 }
 
 async function fetchData() {
@@ -148,7 +137,6 @@ async function fetchData() {
     const data = await res.json();
     hashtag = data.hashtag || hashtag;
     hashtagEl.textContent = `#${hashtag}`;
-    nextRefreshAt = data.nextRefreshAt || 0;
 
     const ids = new Set(tweets.map(t => t.id));
     const incoming = data.tweets || [];
@@ -165,8 +153,6 @@ async function fetchData() {
     updateStatus(0, e.message);
   }
 }
-
-refreshMinsEl.textContent = "30";
 
 fetchData();
 // Poll the local cache every minute (server refreshes from Twitter every 30 min)
