@@ -13,10 +13,18 @@ async function fetchTweets() {
   const bearer = process.env.TWITTER_BEARER_TOKEN;
   if (!bearer) throw new Error("Missing TWITTER_BEARER_TOKEN env var");
 
+  // Start of today in UTC (IST = UTC+5:30, so midnight IST = 18:30 previous UTC day;
+  // using UTC midnight is close enough and keeps it simple)
+  const today = new Date();
+  const startOfDay = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
+  const startTime = startOfDay.toISOString();
+
   const query = encodeURIComponent(`#${HASHTAG} -is:retweet`);
   const url =
     `https://api.twitter.com/2/tweets/search/recent?query=${query}` +
     `&max_results=50` +
+    `&start_time=${startTime}` +
+    `&sort_order=recency` +
     `&tweet.fields=created_at,public_metrics,attachments,entities` +
     `&expansions=author_id,attachments.media_keys` +
     `&user.fields=name,username,profile_image_url,verified` +
