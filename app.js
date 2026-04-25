@@ -20,14 +20,14 @@ function linkify(text) {
   return t;
 }
 
-function timeAgo(iso) {
+function formatTime(iso) {
   if (!iso) return "";
   const d = new Date(iso);
   const s = Math.floor((Date.now() - d.getTime()) / 1000);
-  if (s < 60) return `${s}s`;
-  if (s < 3600) return `${Math.floor(s / 60)}m`;
-  if (s < 86400) return `${Math.floor(s / 3600)}h`;
-  return `${Math.floor(s / 86400)}d`;
+  const clock = d.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", hour12: true });
+  if (s < 60) return `just now · ${clock}`;
+  if (s < 3600) return `${Math.floor(s / 60)}m ago · ${clock}`;
+  return `${clock}`;
 }
 
 function formatCount(n) {
@@ -80,7 +80,7 @@ function renderCard(t) {
         <div class="stat">${ICONS.retweet}<span>${formatCount(m.retweet_count)}</span></div>
         <div class="stat">${ICONS.like}<span>${formatCount(m.like_count)}</span></div>
         <div class="stat">${ICONS.view}<span>${formatCount(m.impression_count)}</span></div>
-        <div class="date">${timeAgo(t.created_at)}</div>
+        <div class="date">${formatTime(t.created_at)}</div>
       </div>
     </article>
   `;
@@ -107,15 +107,17 @@ function render() {
   }
 
   track.classList.remove("paused");
-  track.style.animation = "";
 
   // Duplicate list so the marquee loops seamlessly (animation translates -50%)
   const html = tweets.map(renderCard).join("") + tweets.map(renderCard).join("");
   track.innerHTML = html;
 
-  // Scale animation duration to number of cards for consistent slow speed
-  const secondsPerCard = 12; // larger = slower
+  // Reset scroll to start (newest posts) then restart animation
+  track.style.animation = "none";
+  track.offsetHeight; // force reflow
+  const secondsPerCard = 12;
   track.style.animationDuration = `${Math.max(60, tweets.length * secondsPerCard)}s`;
+  track.style.animation = `scroll ${Math.max(60, tweets.length * secondsPerCard)}s linear infinite`;
 }
 
 function updateStatus(fetchedAt, error) {
@@ -155,7 +157,7 @@ async function fetchData() {
 }
 
 fetchData();
-// Poll the local cache every minute (server refreshes from Twitter every 30 min)
-setInterval(fetchData, 60 * 1000);
-// Update "updated Xm ago" and countdown every 15s
-setInterval(() => updateStatus(Date.now() - (Date.now() % 60000), null), 15 * 1000);
+// Poll every 2 minutes; server refetches from Twitter every REFRESH_MINUTES
+setInterval(fetchData, 2 * 60 * 1000);
+// Keep relative times fresh every 30s
+setInterval(() => { if (tweets.length) render(); }, 30 * 1000);

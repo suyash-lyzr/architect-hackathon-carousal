@@ -377,10 +377,12 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 300; line-height
 .stat:hover { color: var(--rosem); }
 .date {
   margin-left: auto;
-  font-family: var(--font-display);
-  font-style: italic;
+  font-family: var(--font-body);
   font-size: 13px;
-  color: rgba(243, 237, 231, .4);
+  font-weight: 500;
+  color: rgba(243, 237, 231, .75);
+  letter-spacing: .01em;
+  white-space: nowrap;
 }
 
 /* ───── empty state ───── */

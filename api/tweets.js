@@ -3,7 +3,7 @@
 // In-memory cached per function instance; refreshed after REFRESH_MINUTES.
 
 const HASHTAG = process.env.HASHTAG || "LyzrAgentathon";
-const REFRESH_MINUTES = parseInt(process.env.REFRESH_MINUTES || "30", 10);
+const REFRESH_MINUTES = parseInt(process.env.REFRESH_MINUTES || "5", 10);
 const REFRESH_MS = REFRESH_MINUTES * 60 * 1000;
 
 let cache = { fetchedAt: 0, tweets: [], error: null };

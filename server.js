@@ -9,7 +9,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const BEARER = process.env.TWITTER_BEARER_TOKEN;
 const HASHTAG = process.env.HASHTAG || "LyzrAgentathon";
 const PORT = parseInt(process.env.PORT || "3939", 10);
-const REFRESH_MS = parseInt(process.env.REFRESH_MINUTES || "30", 10) * 60 * 1000;
+const REFRESH_MS = parseInt(process.env.REFRESH_MINUTES || "5", 10) * 60 * 1000;
 const CACHE_FILE = path.join(__dirname, "cache.json");
 
 if (!BEARER) {
